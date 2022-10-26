@@ -1,0 +1,148 @@
+Multithreading is a process of executing multiple threads simultaniously. 
+Thread is the smallest unit of processing
+The untimate goal is to perform multitasking, which can be done using Multithreading and Multiprocessing
+But we prefer Multithreading more, because it shares already existing memory no need to create seperate memory
+Multithreading is mostly used in trading, games, animation
+
+Advantages of using multithreading:
+  a) Threads are independent, so that they can perform multiple tasks simultaniously
+  b) As they are independedt, error in one thread won't effect another thread
+
+Multiprocessing vs Multithreading
+
+Multiprocessing: 
+  a) Each process allocates seperate memory
+  b) Process is of heavy weight, because each process requires seperate data, seperate Os and everything
+  c) Cost of communication b/w processes is high
+  d) Switching from one thread to another is difficult
+
+Multithreading:
+  a) Each thread allocates shared memory
+  b) Thread is of light weight
+  d) Cost of communication is low
+
+Cycle :
+ OS contains Processes and Processes contains Threads
+
+void           - start() - It is used to start the execution of thread
+void           - run() - It is where the action of thread is performed
+static void    - sleep() - It makes thread to sleep for particular amount of time
+static Thread  - currentThread() - It specifies the reference of current thread
+void           - Join() - It waits for a thread to die
+int            - getPriority() - It gives the priority of thread
+void           - setPriority)() - It changes the priority of thread
+String         - getName() - It gives the name of the thread
+void           - setName() - It changes the name of the thread
+long           - getId() - It gives the ID of the thread
+boolean        - isAlive() - It checks whether the thread is alive or not
+static void    - yield()  - It pauses the current thread and allows other threads to execute temporarily
+void           - suspend() - It is used to suspend the thread
+void           - resume() - It is used to resume the suspened thread
+void           - stop() - It is used to stop the thread
+void           - destroy() - It is used to destroy the group of threads and its subgroups
+boolean        - isDeamon() - It checks whether the thread is deamon or not
+void           - setDeamon() - It changes the thread to Deamon or user thread
+void           - Interrupt() - It interrupts the thread
+boolean        - isInterrupted() - It checks whether it is interrupted or not
+boolean        - interrupted() - It checks that current thread is interrupted or not
+static int     - activeCount() - It checks the no of active threads in the group
+void           - checkAccess() - It checks if the current running thread is having access to modify the thread
+static boolean - holdLock() - It returns true if and only if thread holds the monitor lock
+static void    - dumpStack() - It is used to print the stack trace of current thread
+static int     - enumerate() - It copies the thread group and its sub group to an array
+Thread.state   - getState()  - It is used to return the state of the thread
+ThreadGroup    - getThreadGroup() - It is used to return the group name to which thread belongs
+String         - toString()  - It returns threads name, priority and group name
+void           - notify() - It gives the notification for only one thread which is waiting for object
+void           - notifyAll() - It gives the notificatin to all the threads
+void           - setContextClassLoader() - It changes the classLoader for the thread
+ClassLoader    - getContextClassLoader() - It returns the classLoader for the thread
+static Thread.Exception() - getDefaultUncaughtExceptionHandler() - It returns the default handler present in the thread when any thread is terminated due to Uncaught exception
+static void    - setDefaultUncaughtException() - It sets the default handler when the thread got terminated due to uncaughtException
+
+
+*Life Cycle of thread
+1. New
+2. Active
+3. Blocked/Waiting
+4. Timed Waiting
+5. Terminated
+
+New : When a thread is created it is always in new state. It means no code is run yet and no execution done
+Active : When a thread invokes start() method, It moves from new state to active state. There are 2 states in it -> runnable and running
+     a) Runnable : The thread that is in running state or ready to run are in runnable state. It is the duty of 
+                   thread scheduler to schedule time for threads one after another
+     b) Running :  When the thread get the CPU, it gets from runnable state to running state and again back to 
+                   runnable
+Blocked/Waiting: Whenever the thread is inactive(temporarily) then either the thread is in Blocked/Waiting stat
+
+Timed Waiting : Sometimes waiting for one thread will lead another thread into startvation, So to avoid this 
+                'Timed Waiting' Will fix sometime and in that time if the front thread in the queue is not processes then the waiting thread will be not affected to starvation. 
+Terminated : Thread can be terminated in two cases
+             a) When the job is done and terminated normally
+             b) Abnormal Condition when there is any exception occured
+
+
+*Implementation of thread states
+public static final Thread.State NEW
+         - It represents that thread is in new state
+public static final Thread.State RUNNABLE
+         - It represents that thread is in runnable state and waiting in the queue to run
+public static final Thread.State BLOCKED
+         - It represents that the thread is in waiting state to acquire lock.
+public static final Thread.State WAITING
+         - Thread faces this states when it invokes Object.wait() or Thread.join()
+public static final Trhead.State TIMED_WAITING
+         - The main difference b/w waiting ana timed_waiting is waiting is not having time constraint and timed_waiting is having time constraint
+public static final Thread.State TERMINATED 
+         - It represents the final state of thread i.e terminated or dead
+
+
+
+*HOW TO CREATE THREAD 
+
+      1. By extending the Thread Class
+      2. By implementing the Runnable Interface
+
+1st way
+class Main extends Thread{
+    public void run(){
+        System.out.println("Hey print me, my name is "+Thread.currentThread().getName());
+    }
+    public static void main(String g[]){
+        Main m = new Main();
+        m.start();
+    }
+}
+
+2nd way
+class Main implements Runnable{
+    public void run(){
+        System.out.println("Hey Runnable print me please, my name is "+Thread.currentThread().getName());
+        
+    }
+    public static void main(String args[]){
+        Thread tt = new Thread(new Main());
+        tt.start();
+    }
+}
+
+Directly using Thread class
+class Main{
+  public static void main(String args[]){
+        Thread tt = new Thread("HEy direct");
+    tt.start();
+    System.out.println(tt.getName());
+  }
+}
+
+Directly using runnable interface
+class Main implements Runnable{
+    public void run(){
+        System.out.println("Hey run me");
+    }
+   public static void main(String args[]){
+        Thread tt = new Thread(new Main(),"HEy how do you do");
+    System.out.println(tt.getName());
+   }
+}
